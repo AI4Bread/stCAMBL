@@ -1,6 +1,6 @@
 # stCAMBL:Biased Multi-view Contrastive Learning with Attentive Masking for Spatial Transcriptomic Analysis
 ## Overview:
-
+![](Model.png)
 __stCAMBL__ uses three views to construct the contrastive learning framework. Every view utilises a masked autoencoder with special masking strategies to learn a a low-dimensional expression and a variational graph autoencoder to acquire its spatial information. After that, various loss functions are added to improve the model's ability of unsupervised clustering. The embedding produced by stCAMBL can be used for batch integration, clustering and pseudotime trajectory analysis, etc. The reconstructed results can be used for signal strengthening, etc.
 
 ## Requirements:
