@@ -12,7 +12,7 @@ import os
 #Please change this path to your local R environment path
 os.environ['R_HOME'] = '/data3/wkcui/env/anaconda3/envs/stCAMBL/lib/R'
 # 0.52661, 0.62050 ,0.50143 ,0.71868,0.71445,0.69403, 0.71035, 0.66576,0.54958,0.59229,0.46019,0.45463
-##########################################################
+###################################
 import matplotlib as mpl
 import matplotlib.font_manager as fm
 from pathlib import Path

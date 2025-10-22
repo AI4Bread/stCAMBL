@@ -9,7 +9,6 @@ import warnings
 warnings.filterwarnings('ignore')
 import stCAMBL
 import os
-# 0.06292, 0.07127 ,0.00078 ,0.03826 ,0.52783 ,0.23201 ,0.12396, 0.30895, 0.47863, 0.40559 ,0.12662, 0.42214, 0.46738, 0.52777, 0.40912,0.41096,0.54812,0.43571,0.28623,0.41527
 os.environ['R_HOME'] = '/data3/wkcui/env/anaconda3/envs/stCAMBL/lib/R'
 random_seed = 2050
 device = 'cuda:3' if torch.cuda.is_available() else 'cpu'
