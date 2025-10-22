@@ -19,7 +19,7 @@ import sys
 sys.path.insert(0, os.path.abspath('.'))
 # -- Project information -----------------------------------------------------
 
-project = 'MAPGCL'
+project = 'stCAMBL'
 copyright = '2025, AI4BREAD'
 author = 'Laiyi Fu, Penglei Wang & Gaoyuan Xu etc.'
  
@@ -64,13 +64,14 @@ html_theme_options = {
     "style_external_links": True,
     "vcs_pageview_mode": "blob",  # 必须是 "blob"
     "navigation_with_keys": False,
-    "github_url": "https://github.com/AI4Bread/MGAPCL",
+    "github_url": "https://github.com/AI4Bread/stCAMBL",
 }
 
 html_context = {
     "display_github": True,
     "github_user": "AI4Bread",
-    "github_repo": "MGAPCL",
+    "github_repo": "stCAMBL",
     "github_version": "main/",
     "conf_py_path": "source/",  # 注意这里是你 notebook 文件所在的相对路径
+
 }
