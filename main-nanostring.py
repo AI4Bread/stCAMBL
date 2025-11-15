@@ -56,10 +56,10 @@ from sklearn.decomposition import PCA
 adata_X = PCA(n_components=200, random_state=42).fit_transform(adata.X)
 adata.obsm['X_pca'] = adata_X
 graph_dict = stCAMBL.graph_construction(adata, 12)
-model = stCAMBL.stCAMBL(adata.obsm['X_pca'], graph_dict, device=device , rec_w=6, gcn_w=6, self_w=4, hsl_w=4, csl_w=1)
-model.train_model(epochs=200, dataset=dataset)
-mapgcl_feat, defeat, _, _, _ = model.process()
-adata.obsm['emb'] = mapgcl_feat
+model = stCAMBL.stCAMBL(dataset, adata.obsm['X_pca'], graph_dict, device=device , rec_w=6, gcn_w=6, self_w=4, hsl_w=4, csl_w=1)
+model.train_model(epochs=200)
+stCAMBL_feat, defeat, _, _, _ = model.process()
+adata.obsm['emb'] = stCAMBL_feat
 radius = 50
 tool = 'mclust' 
 from stCAMBL.clust_func import clustering
