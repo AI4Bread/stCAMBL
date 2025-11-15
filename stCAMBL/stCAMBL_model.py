@@ -9,6 +9,7 @@ from .loss_func import HypersphericalLoss, semi_grad_function, reconstruction_lo
 class stCAMBL:
     def __init__(
             self,
+            dataset,
             X,
             graph_dict,
             rec_w=10,   
@@ -20,7 +21,7 @@ class stCAMBL:
             ignore_rate=0.05,   #0.05
 
     ):
-        
+        self.dataset = dataset
         self.rec_w = rec_w
         self.gcn_w = gcn_w
         self.self_w = self_w
@@ -53,8 +54,8 @@ class stCAMBL:
         self.fc2 = torch.nn.Linear(2 * self.latent_dim, self.latent_dim).to(self.device)
 
         self.norm_value = graph_dict["norm_value"]
-
-        self.model = stCAMBL_Lib(self.cell_num, self.input_dim).to(self.device)
+       
+        self.model = stCAMBL_Lib(self.dataset, self.cell_num, self.input_dim).to(self.device)
         self.loss_HSL = HypersphericalLoss()
 
     def projection(self, z: torch.Tensor) -> torch.Tensor:
@@ -97,7 +98,6 @@ class stCAMBL:
             lr=0.01,
             decay=0.01,
             N=1,
-            dataset=None
     ):
         self.optimizer = torch.optim.Adam(
             params=list(self.model.parameters()),
@@ -105,34 +105,35 @@ class stCAMBL:
             weight_decay=decay)
 
         self.model.train()
-        if dataset in ['lymph']:
+        if self.dataset in ['lymph']:
             self.rec_w = 10
             self.gcn_w = 2
             self.self_w = 5
             self.hsl_W = 2
             self.csl_w = 2
-        if dataset in ['breast']:
+        if self.dataset in ['human_breast']:
             self.rec_w = 10
             self.gcn_w = 0.5
             self.self_w = 3
             self.hsl_W = 5
             self.csl_w = 2
+            self.ignore_rate = 0.5
 
-        if dataset in ['fov8', 'fov10', 'fov11', 'fov12', 'fov14', 'fov16', 'fov17']:
+        if self.dataset in ['fov8', 'fov10', 'fov11', 'fov12', 'fov14', 'fov16', 'fov17']:
             epochs = 200
-        elif dataset in ['fov1', 'fov2', 'fov3', 'fov4', 'fov5', 'fov6', 'fov7', 'fov9', 'fov13', 'fov15', 'fov18', 'fov19', 'fov20']:
+        elif self.dataset in ['fov1', 'fov2', 'fov3', 'fov4', 'fov5', 'fov6', 'fov7', 'fov9', 'fov13', 'fov15', 'fov18', 'fov19', 'fov20']:
             epochs = 150
 
-        if dataset in ['151670','151675','151676']:
+        if self.dataset in ['151670','151675','151676']:
             epochs = 100
-        elif dataset in ['151671']:
+        elif self.dataset in ['151671']:
             epochs = 600
-        elif dataset in ['151669']:
+        elif self.dataset in ['151669']:
             epochs = 200
 
-        elif dataset in ['151508', '151507', '151510']:
+        elif self.dataset in ['151508', '151507', '151510']:
             epochs = 300
-        elif dataset in ['151509', '151672', '151673', '151674']:
+        elif self.dataset in ['151509', '151672', '151673', '151674']:
             epochs = 400
             
         for epoch in tqdm(range(epochs)):
