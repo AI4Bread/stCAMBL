@@ -55,6 +55,7 @@ class InnerProductDecoder(nn.Module):
 class stCAMBL_Lib(nn.Module):
     def __init__(
             self,
+            dataset,
             cell_dim,
             gene_dim,
             feat_hidden1=64,
@@ -66,6 +67,7 @@ class stCAMBL_Lib(nn.Module):
             dec_clsuter_n=10,
     ):
         super(stCAMBL_Lib, self).__init__()
+        self.dataset = dataset
         self.gene_dim = gene_dim
         self.feat_hidden1 = feat_hidden1
         self.feat_hidden2 = feat_hidden2
@@ -94,7 +96,10 @@ class stCAMBL_Lib(nn.Module):
         torch.nn.init.xavier_normal_(self.cluster_layer.data)
 
         self.enc_mask_token = nn.Parameter(torch.zeros(cell_dim, gene_dim))
-        self._mask_rate = 0.5
+        if self.dataset in ['lymph','human_breast']:
+            self._mask_rate = 0.5
+        else :
+            self._mask_rate = 0.7
         self.criterion = self.setup_loss_fn(loss_fn='mse')
 
     def setup_loss_fn(self, loss_fn, alpha_l=3):
@@ -134,9 +139,9 @@ class stCAMBL_Lib(nn.Module):
 
 
         x_init = x * mask_matrix
-        x_rec = de_feat * mask_matrix  #
+        x_rec = de_feat * mask_matrix 
 
-        loss = self.criterion(x_rec, x_init)  #
+        loss = self.criterion(x_rec, x_init)  
 
         return z, mu, logvar, de_feat, q, feat_x, gnn_z, loss
     
@@ -153,14 +158,26 @@ class stCAMBL_Lib(nn.Module):
         # mask_pre = mask_matrix.clone()
         
         for col in range(num_genes):
-            if col < 49:
-                mask_prob = 0.1
-            elif 49 <= col < 99:
-                mask_prob = 0.05  
-            elif 99 <= col < 199:
-                mask_prob = 0.01 
+            if self.dataset in ['human_breast']:
+                if col < 49:
+                    mask_prob = 0.5
+                elif 49 <= col < 99:
+                    mask_prob = 0.3
+                elif 99 <= col < 199:
+                    mask_prob = 0.1 
+                else:
+                    continue
             else:
-                continue  
+                if col < 49:
+                    mask_prob = 0.1
+                elif 49 <= col < 99:
+                    mask_prob = 0.05  
+                elif 99 <= col < 199:
+                    mask_prob = 0.01 
+                else:
+                    continue
+            
+              
             candidate_rows = torch.where(mask_matrix[:, col] == 1)[0]
             
             if len(candidate_rows) == 0:
