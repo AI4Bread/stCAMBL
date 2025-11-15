@@ -58,9 +58,9 @@ adata_X = PCA(n_components=200, random_state=42).fit_transform(adata.X)
 
 adata.obsm['X_pca'] = adata_X
 graph_dict = stCAMBL.graph_construction(adata, 12)
-model = stCAMBL.stCAMBL(adata.obsm['X_pca'], graph_dict, device=device)
+model = stCAMBL.stCAMBL(dataset, adata.obsm['X_pca'], graph_dict, device=device)
 # Begin to train the model
-model.train_model(epochs=300, dataset=dataset)
+model.train_model(epochs=300)
 stCAMBL_feat, defeat, _, _, _ = model.process()
 adata.obsm['emb'] = stCAMBL_feat
 
@@ -75,20 +75,20 @@ adata.uns['ARI'] = ARI
 print('Dataset:', dataset)
 print('ARI:', ARI)   
 
-# plotting spatial clustering result
-sc.pl.spatial(adata,
-          img_key="hires",
-          color=["layer_guess", "domain"],
-          title=["Ground truth", "ARI=%.4f"%ARI],
-          show=False)
+# # plotting spatial clustering result
+# sc.pl.spatial(adata,
+#           img_key="hires",
+#           color=["layer_guess", "domain"],
+#           title=["Ground truth", "ARI=%.4f"%ARI],
+#           show=False)
 
-file_path1 = os.path.join('/data3/yfchen/stCAMBL/results/10X/clustering', dataset+"_clustering.pdf") 
-plt.savefig(file_path1) 
+# file_path1 = os.path.join('/data3/yfchen/stCAMBL/results/10X/clustering', dataset+"_clustering.pdf") 
+# plt.savefig(file_path1) 
 
-# plotting predicted labels by UMAP
-sc.pp.neighbors(adata, use_rep='emb_pca', n_neighbors=10)
-sc.tl.umap(adata)
-sc.pl.umap(adata, color='domain', title=['Predicted labels'], show=False)
+# # plotting predicted labels by UMAP
+# sc.pp.neighbors(adata, use_rep='emb_pca', n_neighbors=10)
+# sc.tl.umap(adata)
+# sc.pl.umap(adata, color='domain', title=['Predicted labels'], show=False)
 
-file_path2 = os.path.join('/data3/yfchen/stCAMBL/results/10X/UMAP', dataset+"_UMAP.pdf")
-plt.savefig(file_path2)  
+# file_path2 = os.path.join('/data3/yfchen/stCAMBL/results/10X/UMAP', dataset+"_UMAP.pdf")
+# plt.savefig(file_path2)  
