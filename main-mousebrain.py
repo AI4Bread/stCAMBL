@@ -12,6 +12,7 @@ import os
 os.environ['R_HOME'] = '/data3/wkcui/env/anaconda3/envs/stCAMBL/lib/R'
 random_seed = 2050
 device = 'cuda:3' if torch.cuda.is_available() else 'cpu'
+dataset = 'mouse_anterior_posterior_brain_merged'
 stCAMBL.set_seed(random_seed)
 ##########################################################
 import matplotlib as mpl
@@ -50,10 +51,10 @@ adata_X = PCA(n_components=200, random_state=42).fit_transform(adata.X)
 adata.obsm['X_pca'] = adata_X
 
 graph_dict = stCAMBL.graph_construction(adata, 12)
-model = stCAMBL.stCAMBL(adata.obsm['X_pca'], graph_dict, device=device , rec_w=6, gcn_w=6, self_w=4, hsl_w=4, csl_w=1)
+model = stCAMBL.stCAMBL(dataset, adata.obsm['X_pca'], graph_dict, device=device , rec_w=6, gcn_w=6, self_w=4, hsl_w=4, csl_w=1)
 model.train_model(epochs=400)
-mapgcl_feat, defeat, _, _, _ = model.process()
-adata.obsm['emb'] = mapgcl_feat
+stCAMBL_feat, defeat, _, _, _ = model.process()
+adata.obsm['emb'] = stCAMBL_feat
 radius = 50
 tool = 'mclust' 
 from stCAMBL.clust_func import clustering
