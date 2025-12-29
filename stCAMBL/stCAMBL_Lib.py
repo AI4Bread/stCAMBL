@@ -96,7 +96,7 @@ class stCAMBL_Lib(nn.Module):
         torch.nn.init.xavier_normal_(self.cluster_layer.data)
 
         self.enc_mask_token = nn.Parameter(torch.zeros(cell_dim, gene_dim))
-        if self.dataset in ['lymph','human_breast']:
+        if self.dataset in ['lymph','human_breast','fov1','fov2','fov3','fov4','fov5','fov6','fov7','fov8','fov9','fov10','fov11','fov12','fov13','fov14','fov15','fov16','fov17','fov18','fov19','fov20']:
             self._mask_rate = 0.5
         else :
             self._mask_rate = 0.7
@@ -195,3 +195,4 @@ class stCAMBL_Lib(nn.Module):
         out_x += mask_matrix * self.enc_mask_token
         
         return adj.clone(), out_x, mask_matrix
+
