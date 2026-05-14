@@ -47,7 +47,7 @@ If you find stCAMBL useful in your research, please consider citing our paper:
 
 **Published paper:**  
 
-Fu, Laiyi, Wenkai Cui, Yifan Chen, Danyang Wu, and Hequan Sun.  
+Fu, Laiyi, Wenkai Cui, Yifan Chen, Danyang Wu*, and Hequan Sun*.  
 
 *Biased multi-view contrastive learning with attentive masking for spatial transcriptomic analysis.*  
 
