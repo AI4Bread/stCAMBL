@@ -22,10 +22,38 @@ include
 ```
 
 ## Tutorial
-Tutorials can be found here:  https://stcambl.readthedocs.io/en/latest/
+Detailed tutorials and documentation are available at: 
+https://stcambl.readthedocs.io/en/latest/
 
-## Citation:
+## Citation
 
-...
-**This repository contains the source code for the paper:**
+If you find stCAMBL useful in your research, please consider citing our paper:
+
+```bibtex
+
+@article{fu2026stcambl,
+
+  title={Biased multi-view contrastive learning with attentive masking for spatial transcriptomic analysis},
+  author={Fu, Laiyi and Cui, Wenkai and Chen, Yifan and Wu, Danyang and Sun, Hequan},
+  journal={Briefings in Bioinformatics},
+  volume={27},
+  number={3},
+  pages={bbag215},
+  year={2026},
+  doi={10.1093/bib/bbag215}
+}
+
+```
+
+**Published paper:**  
+
+Fu, Laiyi, Wenkai Cui, Yifan Chen, Danyang Wu, and Hequan Sun.  
+
+*Biased multi-view contrastive learning with attentive masking for spatial transcriptomic analysis.*  
+
+Briefings in Bioinformatics, Volume 27, Issue 3, May 2026, bbag215.  
+
+https://doi.org/10.1093/bib/bbag215
+
+---
 
